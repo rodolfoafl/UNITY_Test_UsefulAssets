@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Dummiesman;
 
 using System;
 using System.IO;
@@ -269,17 +270,19 @@ namespace SimpleFileBrowser
 		private List<Filter> filters = new List<Filter>();
 		private Filter allFilesFilter;
 
-		private bool showAllFilesFilter = true;
+		private bool showAllFilesFilter = false;
 
 		private int currentPathIndex = -1;
 		private List<string> pathsFollowed = new List<string>();
 
 		// Required in RefreshFiles() function
 		private UnityEngine.EventSystems.PointerEventData nullPointerEventData;
-		#endregion
 
-		#region Properties
-		private string m_currentPath = string.Empty;
+        GameObject loadedObject;
+        #endregion
+
+        #region Properties
+        private string m_currentPath = string.Empty;
 		private string CurrentPath
 		{
 			get { return m_currentPath; }
@@ -640,7 +643,7 @@ namespace SimpleFileBrowser
 				else
 					filenameImage.color = wrongFilenameColor;
 			}
-			else if( Directory.Exists( path ) )
+			/*else if( Directory.Exists( path ) )
 			{
 				if( m_folderSelectMode )
 					OnOperationSuccessful( path );
@@ -663,7 +666,7 @@ namespace SimpleFileBrowser
 				}
 				else
 					filenameImage.color = wrongFilenameColor;
-			}
+			}*/
 		}
 
 		public void OnCancelButtonClicked()
@@ -683,7 +686,10 @@ namespace SimpleFileBrowser
 			if( onSuccess != null )
 				onSuccess( path );
 
-			onSuccess = null;
+            //ADICIONADO
+            loadedObject = new OBJLoader().Load(Result);
+
+            onSuccess = null;
 			onCancel = null;
 		}
 

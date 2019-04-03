@@ -17,6 +17,7 @@ using System.IO;
 using UnityEngine;
 using System;
 using Dummiesman;
+using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -263,7 +264,17 @@ namespace Dummiesman
 
             //finally, put it all together
             GameObject obj = new GameObject(_objInfo != null ? Path.GetFileNameWithoutExtension(_objInfo.Name) : "WavefrontObject");
-            obj.transform.localScale = new Vector3(-1f, 1f, 1f);
+            obj.transform.localScale = new Vector3(1f, 1f, 1f);
+
+            //ADICIONADO
+            obj.gameObject.AddComponent<AddBoxCollider>();
+            obj.gameObject.AddComponent<RotateObjectWithMouse>();
+
+            var center = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane * 10));
+            Camera.main.GetComponent<CenterCamera>().SetTarget(obj);
+            obj.transform.position = new Vector3(center.x, center.y, Camera.main.nearClipPlane);
+
+            
 
             foreach (var builder in builderDict)
             {
@@ -275,6 +286,7 @@ namespace Dummiesman
                 builtObj.transform.SetParent(obj.transform, false);
             }
 
+            Debug.Log("the obj: " + obj.name);
             return obj;
         }
 
