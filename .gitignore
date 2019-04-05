@@ -19,3 +19,9 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+\.vscode/
+
+\.vs/UNITY_Test_UsefulAssets/DesignTimeBuild/
+
+\.vs/UNITY_Test_UsefulAssets/v15/Server/sqlite3/
