@@ -264,17 +264,24 @@ namespace Dummiesman
 
             //finally, put it all together
             GameObject obj = new GameObject(_objInfo != null ? Path.GetFileNameWithoutExtension(_objInfo.Name) : "WavefrontObject");
+           
+            //ADICIONADO
+            obj.gameObject.name = "Objeto";
+
             obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
             //ADICIONADO
             obj.gameObject.AddComponent<AddBoxCollider>();
             obj.gameObject.AddComponent<RotateObjectWithMouse>();
+            obj.gameObject.AddComponent<ResetSelfRotation>();
 
+            //ADICIONADO
             var center = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, Camera.main.nearClipPlane * 10));
             Camera.main.GetComponent<CenterCamera>().SetTarget(obj);
             obj.transform.position = new Vector3(center.x, center.y, Camera.main.nearClipPlane);
 
-            
+            Camera.main.GetComponent<FrameObject>().CallCoroutine(Camera.main, obj);
+
 
             foreach (var builder in builderDict)
             {
